@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button_mixer_beach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mixer"
+        />
+
+    <Button
+        android:id="@+id/button_screenshot_beach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Screenshot"
+        />
+
+    <Button
+        android:id="@+id/button_fisherman"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fisherman"
+        />
+
+    <Button
+        android:id="@+id/button_beach2town"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Town"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="beach page"/>
+
+</LinearLayout>

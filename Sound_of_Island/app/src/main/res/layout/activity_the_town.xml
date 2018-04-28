@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button_town2beach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Beach"
+        />
+    <Button
+        android:id="@+id/button_town2forest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forest"
+        />
+    <Button
+        android:id="@+id/button_town2caffee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Caffee"
+        />
+    <Button
+        android:id="@+id/button_beggar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Begger"
+        />
+    <Button
+        android:id="@+id/button_town2achievement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="achievement"
+        />
+    <Button
+        android:id="@+id/button_town2calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="calendar"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="The town page"/>
+
+</LinearLayout>
