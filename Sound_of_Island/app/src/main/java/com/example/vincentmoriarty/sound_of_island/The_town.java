@@ -1,13 +1,16 @@
 package com.example.vincentmoriarty.sound_of_island;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
 public class The_town extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,5 +55,18 @@ public class The_town extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+    }
+    public void begger_button(View v){
+        AlertDialog.Builder support = new AlertDialog.Builder(The_town.this);
+        support.setTitle("开发者");
+        support.setMessage("SNXF\nCY\nKN\nLHT\nYWT");
+        support.setNegativeButton("返回", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        support.show();
     }
 }

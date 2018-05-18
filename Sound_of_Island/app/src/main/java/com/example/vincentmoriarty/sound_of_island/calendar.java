@@ -18,6 +18,7 @@ public class calendar extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(calendar.this, The_town.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
