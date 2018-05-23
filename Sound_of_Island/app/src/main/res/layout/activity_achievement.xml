@@ -3,18 +3,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/forest"
+    android:background="@mipmap/achievement_bg"
     android:label="成就">
 
-    <Button
-        android:id="@+id/button_achievement2town"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:background="#FFFFFF"
-        android:text="Back" />
 
     
     <ListView

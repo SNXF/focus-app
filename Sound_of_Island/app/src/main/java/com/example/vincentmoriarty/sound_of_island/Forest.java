@@ -19,9 +19,11 @@ import java.lang.reflect.Field;
 
 public class Forest extends AppCompatActivity {
     private TextView mTvShow;
+    private TextView item_show;
     int apple;//持有苹果的数量
     int apple_total;
     MediaPlayer sound;
+    MediaPlayer extra_sound;
     int collecting_time;
     boolean apple_bool = false;
     boolean windbell_sound = false;//风铃的声音是否可用
@@ -31,11 +33,14 @@ public class Forest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forest);
         mTvShow = (TextView) findViewById(R.id.timer);
-        sound = MediaPlayer.create(Forest.this,R.raw.counting_stars);
+        item_show = (TextView) findViewById(R.id.apple_amount);
+        sound = MediaPlayer.create(Forest.this,R.raw.forest_sound);
+        extra_sound = MediaPlayer.create(Forest.this,R.raw.bells);
         SharedPreferences reader = getSharedPreferences("data", MODE_PRIVATE);
         apple = reader.getInt("apple_temp",10);
         apple_total = reader.getInt("apple_total",0);
         collecting_time = reader.getInt("collecting_time",0);
+        item_show.setText(String.valueOf(apple));
         Button button_forest = (Button) findViewById(R.id.button_forest2town);
         button_forest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,12 +51,6 @@ public class Forest extends AppCompatActivity {
             }
         });
     }
-    public void oncancel(View v) {
-        sound.pause();
-        sound.seekTo(0);
-        timer.cancel();
-        mTvShow.setText("00:00");
-    }//结束按钮
     public void update_data(){
         SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
         editor.putInt("apple_temp",apple);
@@ -67,6 +66,9 @@ public class Forest extends AppCompatActivity {
         @Override
         public void onTick(long millisUntilFinished) {
             minute = millisUntilFinished/60000;
+            if((apple_bool)&&(millisUntilFinished%10000==0)){
+
+            }
             second = (millisUntilFinished - minute*60000)/1000;
             if (minute<10){
                 min_str = "0"+String.valueOf(minute);
@@ -85,9 +87,13 @@ public class Forest extends AppCompatActivity {
         public void onFinish() {
             sound.pause();
             sound.seekTo(0);
+            extra_sound.pause();
+            extra_sound.seekTo(0);
             apple++;
             apple_total++;
             collecting_time++;
+            item_show.setText(String.valueOf(apple));
+            Toast.makeText(Forest.this,"专注完成",Toast.LENGTH_SHORT).show();
             SharedPreferences.Editor editor_achievement = getSharedPreferences("data_achievement", MODE_PRIVATE).edit();
             editor_achievement.putBoolean("apple_1",(apple_total>=10));
             editor_achievement.putBoolean("apple_2",(apple_total>=100));
@@ -149,12 +155,12 @@ public class Forest extends AppCompatActivity {
         AlertDialog.Builder time_dia = new AlertDialog.Builder(Forest.this);
         time_dia.setTitle("时间选择");
         settime = 25*60000;
-        String[] time_menu = new String[]{"5min", "10min", "25min", "30min", "60min"};
+        String[] time_menu = new String[]{"10sec", "10min", "25min", "30min", "60min"};
         time_dia.setSingleChoiceItems(time_menu, 2, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
-                    case 0: settime = 5*60*1000;break;
+                    case 0: settime = 10*1000;break;
                     case 1: settime = 10*60*1000;break;
                     case 2: settime = 25*60*1000;break;
                     case 3: settime = 30*60*1000;break;
@@ -181,7 +187,9 @@ public class Forest extends AppCompatActivity {
         forester2_dia.setPositiveButton("嗯", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(apple_bool){apple--; }
+                if(apple_bool){apple--;item_show.setText(String.valueOf(apple));extra_sound.setVolume(0.1f,0.1f);
+                    extra_sound.start();}
+                extra_sound.setLooping(true);
                 SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
                 editor.putInt("fishing_time",0);
                 editor.putInt("reading_time",0);
@@ -189,6 +197,7 @@ public class Forest extends AppCompatActivity {
                 changeMillisInFuture(settime);
                 timer.start();
                 sound.start();
+                sound.setLooping(true);
             }
         });
         forester2_dia.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -199,4 +208,10 @@ public class Forest extends AppCompatActivity {
         });
         forester2_dia.create().show();
     }//二级对话框
+    @Override
+    public void finish() {
+        sound.stop();
+        extra_sound.stop();
+        super.finish();
+    }
 }

@@ -9,18 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".The_town">
+        <activity android:name=".The_town"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".Beach" />
-        <activity android:name=".Forest" />
-        <activity android:name=".Caffee" />
-        <activity android:name=".calendar" />
-        <activity android:name=".achievement"></activity>
+        <activity android:name=".Beach"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Forest"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Caffee"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".achievement"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

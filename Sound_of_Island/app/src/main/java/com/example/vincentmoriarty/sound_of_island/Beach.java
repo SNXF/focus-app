@@ -19,9 +19,11 @@ import java.lang.reflect.Field;
 
 public class Beach extends AppCompatActivity {
     private TextView mTvShow;
+    private TextView item_show;
     int fish;//持有鱼的数量
     int fish_total;//鱼的累积总数
     MediaPlayer sound;
+    MediaPlayer extra_sound;
     int fishing_time = 0;
     boolean fish_bool = false;
     boolean boat_sound = false;//船的声音是否可用
@@ -30,18 +32,20 @@ public class Beach extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beach);
-        sound = MediaPlayer.create(Beach.this,R.raw.counting_stars);
+        sound = MediaPlayer.create(Beach.this,R.raw.beach_sound);
+        extra_sound = MediaPlayer.create(Beach.this,R.raw.boat);
         mTvShow = (TextView) findViewById(R.id.timer);
+        item_show = (TextView) findViewById(R.id.fish_amount);
         SharedPreferences reader = getSharedPreferences("data", MODE_PRIVATE);
         fish = reader.getInt("fish_temp",10);
         fish_total = reader.getInt("fish_total",9);
         fishing_time = reader.getInt("fishing_time",0);
+        item_show.setText(String.valueOf(fish));
         Button button_beach = (Button) findViewById(R.id.button_beach2town);
         button_beach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 update_data();
-                sound.stop();
                 finish();
             }
         });
@@ -53,12 +57,6 @@ public class Beach extends AppCompatActivity {
         editor.putInt("fishing_time",fishing_time);
         editor.apply();
     }
-    public void oncancel(View v) {
-        sound.pause();
-        sound.seekTo(0);
-        timer.cancel();
-        mTvShow.setText("00:00");
-    }//结束按钮
     private CountDownTimer timer = new CountDownTimer(settime,1000) {
         long minute;
         long second;
@@ -82,11 +80,15 @@ public class Beach extends AppCompatActivity {
         }
         @Override
         public void onFinish() {
+            extra_sound.pause();
+            extra_sound.seekTo(0);
             sound.pause();
             sound.seekTo(0);
             fish_total++;
             fish++;
             fishing_time++;
+            item_show.setText(String.valueOf(fish));
+            Toast.makeText(Beach.this,"专注完成",Toast.LENGTH_SHORT).show();
             SharedPreferences.Editor editor_achievement = getSharedPreferences("data_achievement", MODE_PRIVATE).edit();
             editor_achievement.putBoolean("fish_1",(fish_total>=10));
             editor_achievement.putBoolean("fish_2",(fish_total>=100));
@@ -103,7 +105,6 @@ public class Beach extends AppCompatActivity {
             mTvShow.setText("00:00");
         }
     };
-
     private void changeMillisInFuture(long time) {
         try {
             // 反射父类CountDownTimer的mMillisInFuture字段，动态改变定时总时间
@@ -149,7 +150,7 @@ public class Beach extends AppCompatActivity {
         AlertDialog.Builder time_dia = new AlertDialog.Builder(Beach.this);
         time_dia.setTitle("时间选择");
         settime = 25*60000;
-        String[] time_menu = new String[]{"5min", "10min", "25min", "30min", "60min"};
+        String[] time_menu = new String[]{"10sec", "10min", "25min", "30min", "60min"};
         time_dia.setSingleChoiceItems(time_menu, 2, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -181,7 +182,8 @@ public class Beach extends AppCompatActivity {
         time_dia.setPositiveButton("嗯", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(fish_bool){ fish--;}
+                if(fish_bool){ fish--;item_show.setText(String.valueOf(fish));extra_sound.start();}
+                extra_sound.setLooping(true);
                 SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
                 editor.putInt("collecting_time",0);
                 editor.putInt("reading_time",0);
@@ -189,6 +191,7 @@ public class Beach extends AppCompatActivity {
                 changeMillisInFuture(settime);
                 timer.start();
                 sound.start();
+                sound.setLooping(true);
             }
         });
         time_dia.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -199,4 +202,10 @@ public class Beach extends AppCompatActivity {
         });
         time_dia.create().show();
     }//二级对话框，用于选择时间
+    @Override
+    public void finish() {
+        sound.stop();
+        extra_sound.stop();
+        super.finish();
+    }
 }

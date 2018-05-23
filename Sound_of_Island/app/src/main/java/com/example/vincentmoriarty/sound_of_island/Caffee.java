@@ -18,10 +18,12 @@ import java.lang.reflect.Field;
 
 public class Caffee extends AppCompatActivity {
     private TextView mTvShow;
+    private TextView item_show;
     int book;//书的数量
     int book_total;
     int reading_time;
     MediaPlayer sound;
+    MediaPlayer extra_sound;
     boolean book_bool= false;//书的声音是否可用
     boolean library_sound= false;//书的声音是否可用
     long settime=25*60*1000;//settime用于保存计时器的总时间
@@ -29,27 +31,23 @@ public class Caffee extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_caffee);
-        sound = MediaPlayer.create(Caffee.this,R.raw.counting_stars);
+        sound = MediaPlayer.create(Caffee.this,R.raw.chaos2);
+        extra_sound = MediaPlayer.create(Caffee.this,R.raw.book_sound);
         mTvShow = (TextView) findViewById(R.id.timer);
+        item_show = (TextView) findViewById(R.id.book_amount);
         SharedPreferences reader = getSharedPreferences("data", MODE_PRIVATE);
         book = reader.getInt("book_temp",10);
         book_total = reader.getInt("book_total",0);
+        item_show.setText(String.valueOf(book));
         Button button_caffee = (Button) findViewById(R.id.button_caffee2town);
         button_caffee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 update_data();
-                sound.stop();
                 finish();
             }
         });
     }
-    public void oncancel(View v) {
-        sound.pause();
-        sound.seekTo(0);
-        timer.cancel();
-        mTvShow.setText("00:00");
-    }//结束按钮
     public void update_data(){
         SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
         editor.putInt("book_temp",book);
@@ -81,11 +79,15 @@ public class Caffee extends AppCompatActivity {
 
         @Override
         public void onFinish() {
+            extra_sound.pause();
+            extra_sound.seekTo(0);
             sound.pause();
             sound.seekTo(0);
             book++;
             book_total++;
             reading_time++;
+            item_show.setText(String.valueOf(book));
+            Toast.makeText(Caffee.this,"专注完成",Toast.LENGTH_SHORT).show();
             SharedPreferences.Editor editor_achievement = getSharedPreferences("data_achievement", MODE_PRIVATE).edit();
             editor_achievement.putBoolean("book_1",(book_total>=10));
             editor_achievement.putBoolean("book_2",(book_total>=100));
@@ -147,12 +149,12 @@ public class Caffee extends AppCompatActivity {
         AlertDialog.Builder time_dia = new AlertDialog.Builder(Caffee.this);
         time_dia.setTitle("时间选择");
         settime = 25*60000;
-        String[] time_menu = new String[]{"5min", "10min", "25min", "30min", "60min"};
+        String[] time_menu = new String[]{"10sec", "10min", "25min", "30min", "60min"};
         time_dia.setSingleChoiceItems(time_menu, 2, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
-                    case 0: settime = 5*60*1000;break;
+                    case 0: settime = 10*1000;break;
                     case 1: settime = 10*60*1000;break;
                     case 2: settime = 25*60*1000;break;
                     case 3: settime = 30*60*1000;break;
@@ -179,7 +181,8 @@ public class Caffee extends AppCompatActivity {
         time_dia.setPositiveButton("嗯", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if(book_bool){book--; }
+                if(book_bool){book--; item_show.setText(String.valueOf(book));extra_sound.start();}
+                extra_sound.setLooping(true);
                 SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
                 editor.putInt("collecting_time",0);
                 editor.putInt("fishing_time",0);
@@ -187,6 +190,7 @@ public class Caffee extends AppCompatActivity {
                 changeMillisInFuture(settime);
                 timer.start();
                 sound.start();
+                sound.setLooping(true);
             }
         });
         time_dia.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -197,4 +201,10 @@ public class Caffee extends AppCompatActivity {
         });
         time_dia.create().show();
     }//二级对话框，用于选择时间
+    @Override
+    public void finish() {
+        extra_sound.pause();
+        sound.stop();
+        super.finish();
+    }
 }

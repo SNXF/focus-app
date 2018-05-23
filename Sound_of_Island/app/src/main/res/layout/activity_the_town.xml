@@ -2,58 +2,81 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@mipmap/town">
 
+    <ImageView
+        android:layout_width="102dp"
+        android:layout_height="283dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="93dp"
+        android:layout_marginLeft="111dp"
+        android:src="@mipmap/main_character" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:scaleType = "centerCrop"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:src="@mipmap/topbar" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:scaleType = "centerCrop"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/bottombar" />
     <Button
         android:id="@+id/button_town2beach"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/button_town2forest"
-        android:layout_toEndOf="@+id/button_town2forest"
-        android:text="Beach" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="55dp"
+        android:layout_marginRight="150dp"
+        android:background="@mipmap/to_beach" />
 
     <Button
         android:id="@+id/button_town2forest"
-        android:layout_width="wrap_content"
+        android:layout_width="51dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="90dp"
-        android:layout_marginTop="211dp"
-        android:text="Forest" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="211dp"
+        android:layout_marginRight="130dp"
+        android:background="@mipmap/to_forest" />
 
     <Button
         android:id="@+id/button_town2caffee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button_town2beach"
-        android:layout_centerHorizontal="true"
-        android:text="Caffee" />
+        android:layout_width="71dp"
+        android:layout_height="59dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="106dp"
+        android:layout_marginLeft="92dp"
+        android:background="@mipmap/to_caffee" />
 
     <Button
-        android:layout_width="100dp"
-        android:layout_height="148dp"
+        android:layout_width="145dp"
+        android:layout_height="211dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="83dp"
-        android:layout_marginEnd="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="0dp"
         android:background="@mipmap/begger"
         android:onClick="begger_button" />
 
     <Button
         android:id="@+id/button_town2achievement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_width="34dp"
+        android:layout_height="33dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
         android:layout_alignParentTop="true"
-        android:text="achievement" />
+        android:background="@mipmap/ach" />
 
-    <Button
-        android:id="@+id/button_town2calendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="calendar" />
+
 
 
 </RelativeLayout>

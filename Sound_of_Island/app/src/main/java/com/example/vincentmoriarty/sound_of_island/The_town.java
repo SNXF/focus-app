@@ -47,14 +47,6 @@ public class The_town extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        Button button_calendar = (Button) findViewById(R.id.button_town2calendar);
-        button_calendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(The_town.this, calendar.class);
-                startActivity(intent);
-            }
-        });
 
     }
     public void begger_button(View v){

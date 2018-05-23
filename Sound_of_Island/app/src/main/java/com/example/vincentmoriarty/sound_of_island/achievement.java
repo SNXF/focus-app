@@ -43,13 +43,6 @@ public class achievement extends AppCompatActivity {
         ItemAdapter adapter = new ItemAdapter(achievement.this,R.layout.items_layout,itemsList);
         ListView listView = (ListView)findViewById(R.id.list_view);
         listView.setAdapter(adapter);
-        Button button_back = (Button) findViewById(R.id.button_achievement2town);
-        button_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     private void initItems(){
@@ -93,9 +86,9 @@ public class achievement extends AppCompatActivity {
 
     private int image_bool(boolean finish_not){
         if (finish_not){
-            return R.mipmap.mixer;
+            return R.mipmap.yes;
         }else{
-            return R.mipmap.back;
+            return R.mipmap.no;
         }
     }
 }

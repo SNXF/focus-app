@@ -5,19 +5,34 @@
     android:layout_height="match_parent"
     android:background="@mipmap/forest">
 
-    <Button
-        android:id="@+id/button_mixer_forest"
-        android:layout_width="41dp"
-        android:layout_height="41dp"
-        android:layout_alignParentRight="true"
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:scaleType = "centerCrop"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:background="@mipmap/mixer" />
+        android:src="@mipmap/topbar" />
+    <ImageView
+        android:id="@+id/apple_image"
+        android:layout_width="41dp"
+        android:layout_height="38dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@mipmap/apple" />
+    <TextView
+        android:id="@+id/apple_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/apple_image"
+        android:textSize="25dp"/>
+
 
     <Button
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_toLeftOf="@id/button_forest2town"
         android:background="@mipmap/time"
         android:onClick="time_choose_forest" />
 
@@ -33,9 +48,9 @@
 
     <Button
         android:id="@+id/button_forest2town"
-        android:layout_width="30dp"
-        android:layout_height="35dp"
-        android:layout_alignParentStart="true"
+        android:layout_width="40dp"
+        android:layout_height="37dp"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@mipmap/back" />
 
@@ -49,12 +64,13 @@
         android:textSize="40dp"
         android:textColor="#FFFFFF"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/timer"
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:scaleType = "centerCrop"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="oncancel"
-        android:text="X" />
+        android:src="@mipmap/bottombar" />
 
 </RelativeLayout>
